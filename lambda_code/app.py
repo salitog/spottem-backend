@@ -33,10 +33,8 @@ def lambda_handler(event, context):
 
     try:
         body = event["body"]
-        logger.info(body)
-        userid = "Sal is stupid"
-        userid = body["userid"]
-        print(f"User Id given: {userid}")
+        # json.loads() takes in a string and turns it to a json parseable structure
+        userid = json.loads(body)["userid"]
     except:
         logger.info("No id passed in!")
         return DUMMY_FEED
