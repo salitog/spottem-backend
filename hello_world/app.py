@@ -9,6 +9,7 @@ logger = structlog.get_logger()
 client_id = "51e504413e18451b983e95d3d33bb336"
 secret_key = "52ae74ac3e354ef79df882807729e53d"
 
+
 DUMMY_FEED = { "statusCode": 200,
                 "body": json.dumps({
                     "message": f"Generated feed for salito",
