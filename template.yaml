@@ -11,20 +11,51 @@ Resources:
     Properties:
       StageName: beta
 
+  RestApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: beta
+      EndpointConfiguration: 
+        Type: REGIONAL
+      Models:
+        User:
+          type: object
+          required:
+            - userid
+          properties:
+            userid:
+              type: string
+
+
   GetFeedFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
-      CodeUri: hello_world/
+      CodeUri: lambda_code/
       Handler: app.lambda_handler
       Runtime: python3.10
       Timeout: 60 # Seconds before lambda function timesout
       Architectures:
         - x86_64
       Events:
-        GetFeedHttpApi:
-          Type: HttpApi # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+        
+        GetFeedDummy:
+          Type: Api
           Properties:
             Path: /getfeed
             Method: get
-            ApiId:
-              Ref: HttpApi
+            RestApiId:
+              Ref: RestApi
+
+        GetFeed:
+          Type: Api
+          Properties:
+            Path: /getfeed
+            Method: post
+            RequestModel:
+              Model: User
+              Required: true
+              ValidateBody: true
+            RestApiId:
+              Ref: RestApi
+
+        

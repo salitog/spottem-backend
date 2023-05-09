@@ -28,8 +28,15 @@ DUMMY_FEED = { "statusCode": 200,
             }
 
 def lambda_handler(event, context):
+
+    logger.info(event)
+
     try:
-        userid = event["userId"]
+        body = event["body"]
+        logger.info(body)
+        userid = "Sal is stupid"
+        userid = body["userid"]
+        print(f"User Id given: {userid}")
     except:
         logger.info("No id passed in!")
         return DUMMY_FEED
